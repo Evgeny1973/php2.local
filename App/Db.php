@@ -23,10 +23,6 @@ class Db {
     public function execute(string $query, array $params = []) {
         $sth = $this->dbh->prepare($query);
         $result = $sth->execute($params);
-        if (true == $result) {
-            return true;
-        } else {
-            return false;
-        }
+        return $result;
     }
 }
