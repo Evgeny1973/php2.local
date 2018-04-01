@@ -1,6 +1,7 @@
 <?php
 include __DIR__ . '/autoload.php';
 
-$articles = \App\Models\Article::findAll();
+$view = new \App\View\View;
+$view->articles = \App\Models\Article::findAll();
 
-include __DIR__ . '/templates/admin.php';
+$view->display(__DIR__ . '/templates/admin.php');

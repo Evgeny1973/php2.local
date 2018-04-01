@@ -1,3 +1,8 @@
+<?php
+/** @var \App\View\View $this */
+?>
+
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -18,7 +23,7 @@
 
 <?php
 
-foreach ($articles as $article) { ?>
+foreach ($this->articles as $article) : ?>
     <h2><?php echo $article->title ?></h2>
     <p><?php echo $article->content ?></p>
 
@@ -26,7 +31,7 @@ foreach ($articles as $article) { ?>
     <a href="/delete.php?id=<?php echo $article->id ?>">Удалить статью</a>
 
     <hr>
-<?php } ?>
+<?php endforeach; ?>
 
 </body>
 </html>
