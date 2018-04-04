@@ -19,7 +19,8 @@
 <?php
 
 foreach ($articles as $article) { ?>
-    <h2><?php echo $article->title ?></h2>
+
+    <a href="/article.php?id=<?php echo $article->id ?>"><h2><?php echo $article->title ?></h2></a>
     <p><?php echo $article->content ?></p>
 
     <a href="/update.php?id=<?php echo $article->id ?>">Редактировать статью</a><br>

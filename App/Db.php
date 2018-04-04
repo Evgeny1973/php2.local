@@ -5,13 +5,13 @@ namespace App;
 
 class Db {
 
-    public $dbh;
+    private $dbh;
 
     public function __construct() {
-        $config = (include __DIR__ . '/../config.php')['db'];
-        $this->dbh = new \PDO('mysql:host=' . $config['host'] . ';dbname=' . $config['dbname'],
-            $config['dbuser'],
-            $config['password']);
+        $config = Config::instance();
+        $this->dbh = new \PDO('mysql:host=' . $config->data['db']['host'] . ';dbname=' . $config->data['db']['dbname'],
+            $config->data['db']['dbuser'],
+            $config->data['db']['password']);
     }
 
     public function query(string $sql, array $data = [], string $class) {
