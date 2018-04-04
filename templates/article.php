@@ -14,7 +14,7 @@
 <h2><?php echo $this->article->title; ?></h2>
 <p><?php echo $this->article->content; ?></p>
 
-<?php if (!empty($this->article)) : ?>
+<?php if (!empty($this->article->author)) : ?>
     <p><?php echo $this->article->author->name; ?></p>
 <?php endif; ?>
 

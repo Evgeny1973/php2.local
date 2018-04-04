@@ -12,6 +12,10 @@ class View {
 
     use GetSet;
 
+    /**
+     * @param $template
+     * @return string
+     */
     public function render($template) {
         ob_start();
         include $template;
@@ -20,6 +24,9 @@ class View {
         return $page;
     }
 
+    /**
+     * @param $template
+     */
     public function display($template) {
         echo $this->render($template);
     }
