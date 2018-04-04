@@ -78,13 +78,9 @@ abstract class Model {
     public static function findById($id) {
         $dbh = new Db;
         $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=:id';
-        $result = $dbh->query($sql, [':id' => $id], static::class);
+        $result = $dbh->query($sql, [':id' => $id], static::class)[0];
         if (!empty($result)) {
-            if ($id == $result[0]->id) {
-                return $result[0];
-            } else {
-                return false;
-            }
+            return $result;
         } else {
             return null;
         }

@@ -24,11 +24,14 @@
 <?php
 
 foreach ($this->articles as $article) : ?>
-    <h2><?php echo $article->title ?></h2>
+    <a href="/article.php?id=<?php echo $article->id; ?>"><h2><?php echo $article->title ?></h2></a>
     <p><?php echo $article->content ?></p>
+    <?php if (!empty($article->author)) : ?>
+        <p><?php echo $article->author->name ?></p>
+    <?php endif; ?>
 
-    <a href="/update.php?id=<?php echo $article->id ?>">Редактировать статью</a><br>
-    <a href="/delete.php?id=<?php echo $article->id ?>">Удалить статью</a>
+    <a href="/update.php?id=<?php echo $article->id; ?>">Редактировать статью</a><br>
+    <a href="/delete.php?id=<?php echo $article->id; ?>">Удалить статью</a>
 
     <hr>
 <?php endforeach; ?>

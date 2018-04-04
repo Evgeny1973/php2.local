@@ -2,28 +2,25 @@
 
 namespace App\View;
 
+use App\GetSet;
+
 /**
  * Class View
  * @property array $articles
  */
-
 class View {
 
-    protected $data = [];
+    use GetSet;
 
-    public function __set($name, $value) {
-        $this->data[$name] = $value;
-    }
-
-    public function __get($name) {
-        return $this->data[$name] ?? null;
-    }
-
-    public function __isset($name) {
-        return $this->data[$name];
+    public function render($template) {
+        ob_start();
+        include $template;
+        $page = ob_get_contents();
+        ob_end_clean();
+        return $page;
     }
 
     public function display($template) {
-        include $template;
+        echo $this->render($template);
     }
 }
