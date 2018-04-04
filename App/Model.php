@@ -2,23 +2,30 @@
 
 namespace App;
 
+use App\Models\Article;
+use App\Models\Author;
+
 abstract class Model {
 
     public const TABLE = '';
-
+    /**
+     * @var int
+     */
     public $id;
 
+    /**
+     * @return array
+     */
     public static function findAll() {
         $db = new Db();
-
         $sql = 'SELECT * FROM ' . static::TABLE;
-        return $db->query(
-            $sql,
-            [],
-            static::class
-        );
+        return $db->query($sql, [], static::class);
     }
 
+    /**
+     * Метод занесения записи в базу
+     * @return bool
+     */
     public function insert() {
         $fields = get_object_vars($this);
         $cols = [];
@@ -40,9 +47,11 @@ abstract class Model {
         return $db->execute($sql, $values);
     }
 
-
+    /**
+     * Метод внесения изменений в одну запись
+     * @return bool
+     */
     public function update() {
-
         $fields = get_object_vars($this);
         $values = [];
         $data = [];
@@ -60,6 +69,10 @@ abstract class Model {
         return $db->execute($sql, $data);
     }
 
+    /**
+     * Метод удаления записи из базы
+     * @return bool
+     */
     public function delete() {
         $sql = 'DELETE FROM ' . static::TABLE . ' WHERE id=:id';
 
@@ -67,6 +80,9 @@ abstract class Model {
         return $db->execute($sql, ['id' => $this->id]);
     }
 
+    /**
+     * Метод выбора - обновить запись (если есть id) или внести новую
+     */
     public function save() {
         if (null !== $this->id) {
             $this->update();
@@ -75,6 +91,11 @@ abstract class Model {
         }
     }
 
+    /**
+     * Метод выборки из базы по id
+     * @param $id
+     * @return Article|Author
+     */
     public static function findById($id) {
         $dbh = new Db;
         $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=:id';
