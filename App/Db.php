@@ -5,6 +5,9 @@ namespace App;
 
 class Db {
 
+    /**
+     * @var \PDO
+     */
     public $dbh;
 
     public function __construct() {
@@ -14,12 +17,23 @@ class Db {
             $config->data['db']['password']);
     }
 
+    /**
+     * @param string $sql
+     * @param array $data
+     * @param string $class
+     * @return array
+     */
     public function query(string $sql, array $data = [], string $class) {
         $sth = $this->dbh->prepare($sql);
         $sth->execute($data);
         return $sth->fetchAll(\PDO::FETCH_CLASS, $class);
     }
 
+    /**
+     * @param string $query
+     * @param array $params
+     * @return bool
+     */
     public function execute(string $query, array $params = []) {
         $sth = $this->dbh->prepare($query);
         $result = $sth->execute($params);
