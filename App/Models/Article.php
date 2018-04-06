@@ -23,6 +23,7 @@ class Article extends Model {
 
 
     /**
+     * Проверяем запрос на автора
      * @param string
      * @return Author|null
      */
@@ -46,5 +47,4 @@ class Article extends Model {
         }
         return false;
     }
-
 }

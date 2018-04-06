@@ -1,5 +1,5 @@
 <?php
-/** @var \App\View\View View */
+/** @var \App\View\View $this */
 ?>
 
 <!doctype html>

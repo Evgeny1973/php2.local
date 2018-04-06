@@ -8,7 +8,7 @@ use App\SetGet;
  * Class View
  * @property array $articles
  */
-class View {
+class View implements \Iterator {
 
     use SetGet;
 
@@ -29,5 +29,26 @@ class View {
      */
     public function display($template) {
         echo $this->render($template);
+    }
+
+//Методы Итератора
+    public function rewind() {
+        return reset($this->data);
+    }
+
+    public function current() {
+        return current($this->data);
+    }
+
+    public function next() {
+        return next($this->data);
+    }
+
+    public function key() {
+        return key($this->data);
+    }
+
+    public function valid() {
+        return (false !== $this->current()) ?? false;
     }
 }

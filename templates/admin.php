@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<a href="/templates/create.php">Добавить новость</a>
+<a href="/new.php">Добавить новость</a>
 
 <?php
 

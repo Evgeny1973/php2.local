@@ -7,5 +7,6 @@ if (isset($_POST['submit'])) {
     $article->content = ($_POST['content']);
     $article->id = ($_POST['id']);
     $article->author_id = ($_POST['author_id']);
+    $article->save();
     header('Location: /admin.php');
 }
