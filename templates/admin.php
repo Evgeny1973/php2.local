@@ -13,13 +13,7 @@
 </head>
 <body>
 
-<h3>Добавить статью</h3>
-
-<form action="/create.php" method="post"><br><br>
-    Название: <input type="text" name="title"><br><br>
-    Текст:<br> <textarea cols="30" rows="10" name="content"></textarea><br><br>
-    <button type="submit" name="submit">Сохранить</button>
-</form>
+<a href="/templates/create.php">Добавить новость</a>
 
 <?php
 
@@ -30,7 +24,7 @@ foreach ($this->articles as $article) : ?>
         <p><?php echo $article->author->name ?></p>
     <?php endif; ?>
 
-    <a href="/update.php?id=<?php echo $article->id; ?>">Редактировать статью</a><br>
+    <a href="/edit.php?id=<?php echo $article->id; ?>">Редактировать статью</a><br>
     <a href="/delete.php?id=<?php echo $article->id; ?>">Удалить статью</a>
 
     <hr>

@@ -3,7 +3,7 @@
 namespace App;
 
 
-trait GetSet {
+trait SetGet {
 
     protected $data = [];
 

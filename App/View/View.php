@@ -2,7 +2,7 @@
 
 namespace App\View;
 
-use App\GetSet;
+use App\SetGet;
 
 /**
  * Class View
@@ -10,7 +10,7 @@ use App\GetSet;
  */
 class View {
 
-    use GetSet;
+    use SetGet;
 
     /**
      * @param $template
