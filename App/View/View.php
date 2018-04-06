@@ -8,7 +8,7 @@ use App\SetGet;
  * Class View
  * @property array $articles
  */
-class View implements \Iterator {
+class View implements \Iterator, \Countable {
 
     use SetGet;
 
@@ -32,6 +32,7 @@ class View implements \Iterator {
     }
 
 //Методы Итератора
+
     public function rewind() {
         return reset($this->data);
     }
@@ -50,5 +51,14 @@ class View implements \Iterator {
 
     public function valid() {
         return (false !== $this->current()) ?? false;
+    }
+
+    //Count
+    /**
+     * Возвращает количество элементов в массиве
+     * @return int
+     */
+    public function count() {
+        return count($this->data);
     }
 }
