@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/autoload.php';
+include __DIR__ . '/App/autoload.php';
 
 if (isset($_GET['id'])) {
     $view = new App\View\View;

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="/create.php" method="post"><br><br>
+<form action="/Admin/create.php" method="post"><br><br>
     Название: <input type="text" name="title"><br><br>
     Текст:<br> <textarea cols="30" rows="10" name="content"></textarea><br><br>
     <button type="submit" name="submit">Сохранить</button>
