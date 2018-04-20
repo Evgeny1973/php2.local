@@ -3,15 +3,12 @@
 namespace App\Controllers;
 
 
-use App\Controller;
+use App\Models\Article;
 
 class Index extends Controller {
 
-    public function __construct() {
-    parent::__construct();
-    }
-
-    public function index(){
-        $this->view->render('/templates/index.php');
+    public function allNews(){
+        $this->view->articles = Article::findAll();
+        $this->view->display(__DIR__ . '/../../templates/index.php');
     }
 }

@@ -1,8 +1,14 @@
 <?php
 include __DIR__ . '/App/autoload.php';
 
-$view = new \App\View\View;
+$uri = $_SERVER['REQUEST_URI'];
 
-$view->articles = \App\Models\Article::findAll();
+$parts = explode('/', trim($uri, '/'));
 
-$view->display(__DIR__ . '/templates/index.php');
+$ctrl = $parts[0] ? ucfirst($parts[0]) : 'Index';
+$action = $parts[1] ?? 'allNews';
+
+$class = '\App\Controllers\\' . $ctrl;
+
+$ctrl = new $class;
+$ctrl->action($action);
