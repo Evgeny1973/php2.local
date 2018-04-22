@@ -10,6 +10,6 @@ class Config {
     use Singleton;
 
     protected function __construct() {
-        $this->data = include __DIR__ . '/../config.php';
+        $this->data = include __DIR__ . '/Config/config.php';
     }
 }
