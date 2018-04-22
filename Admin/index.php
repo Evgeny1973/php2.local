@@ -9,4 +9,3 @@ $action = $parts[1] ?? 'allNews';
 
 $ctrl = new \App\Controllers\Admin;
 $ctrl->action($action);
-
