@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/App/autoload.php';
+include __DIR__ . '/../App/autoload.php';
 
 $uri = $_SERVER['REQUEST_URI'];
 
