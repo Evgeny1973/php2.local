@@ -42,7 +42,7 @@ class Article extends Model {
      * @return bool
      */
     public function __isset($name) {
-        if ('author' === $name) {
+        if ('author' === $name && null != $name) {
             return true;
         }
         return false;

@@ -4,11 +4,11 @@ namespace App\Controllers;
 
 use App\Models\Article;
 
+/**
+ * Class Admin
+ * @package App\Controllers
+ */
 class Admin extends Controller {
-
-
-
-
 
     /**
      * Отображает в админке все новости
@@ -37,6 +37,12 @@ class Admin extends Controller {
      * Редактирование новости
      */
     public function edit() {
+        $this->view->article = \App\Models\Article::findById($_GET['id']);
+        $this->view->display(__DIR__ . '/../../Admin/templates/edit.php');
+    }
+
+
+    public function save() {
         if (isset($_POST['submit'])) {
             $article = \App\Models\Article::findById($_POST['id']);
             $article->title = ($_POST['title']);
@@ -45,20 +51,6 @@ class Admin extends Controller {
             $article->author_id = ($_POST['author_id']);
             $article->save();
             header('Location: /Admin/');
-            exit;
-        }
-        $this->view->article = \App\Models\Article::findById($_GET['id']);
-        $this->view->display(__DIR__ . '/../../Admin/templates/edit.php');
-    }
-
-    public function delete() {
-        if (isset($_GET['id'])) {
-            $article = \App\Models\Article::findById($_GET['id']);
-            $article->delete();
-            header('Location: /Admin/');
-            exit;
-        } else {
-            header('HTTP/1.1 404 Not Found');
             exit;
         }
     }
