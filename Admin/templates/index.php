@@ -14,8 +14,6 @@
 </head>
 <body>
 
-<a href="/admin/newArticle">Добавить новость</a>
-
 <?php
 
 foreach ($this->articles as $article) : ?>
@@ -25,8 +23,7 @@ foreach ($this->articles as $article) : ?>
         <p><?php echo $article->author->name ?></p>
     <?php endif; ?>
 
-    <a href="/admin/edit/?id=<?php echo $article->id; ?>">Редактировать статью</a><br>
-    <a href="/admin/delete/?id=<?php echo $article->id; ?>">Удалить статью</a>
+    <a href="/admin/edit/?id=<?php echo $article->id; ?>">Редактировать новость</a><br>
 
     <hr>
 <?php endforeach; ?>

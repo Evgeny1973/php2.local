@@ -19,21 +19,6 @@ class Admin extends Controller {
     }
 
     /**
-     * Создание новой новости
-     */
-    public function newArticle() {
-        if (isset($_POST['submit'])) {
-            $article = new \App\Models\Article;
-            $article->title = $_POST['title'];
-            $article->content = $_POST['content'];
-            $article->save();
-            header('Location: /Admin/');
-            exit;
-        }
-        $this->view->display(__DIR__ . '/../../Admin/templates/new.php');
-    }
-
-    /**
      * Редактирование новости
      */
     public function edit() {
@@ -42,6 +27,9 @@ class Admin extends Controller {
     }
 
 
+    /**
+     *Сохранение изменений в новости
+     */
     public function save() {
         if (isset($_POST['submit'])) {
             $article = \App\Models\Article::findById($_POST['id']);
