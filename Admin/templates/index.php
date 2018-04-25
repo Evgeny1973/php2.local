@@ -2,7 +2,6 @@
 /** @var \App\View\View $this */
 ?>
 
-
 <!doctype html>
 <html lang="ru">
 <head>

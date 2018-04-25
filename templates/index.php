@@ -1,7 +1,5 @@
 <?php
-/**
- * @var App\View\View $this
- */
+/** @var App\View\View $this */
 ?>
 
 <!doctype html>

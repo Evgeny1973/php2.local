@@ -26,7 +26,6 @@ class Admin extends Controller {
         $this->view->display(__DIR__ . '/../../Admin/templates/edit.php');
     }
 
-
     /**
      *Сохранение изменений в новости
      */
