@@ -8,7 +8,16 @@ $parts = explode('/', $uri);
 $ctrl = $parts[1] ? ucfirst($parts[1]) : 'Index';
 $action = $parts[2] ?? 'allNews';
 
-$class = '\App\Controllers\\' . $ctrl;
+try {
 
-$ctrl = new $class;
-$ctrl->action($action);
+    $class = '\App\Controllers\\' . $ctrl;
+    $ctrl = new $class;
+    $ctrl->action($action);
+
+} catch (\App\DbException $error) {
+    include __DIR__ . '/templates/exceptions.php';
+
+} catch (\App\NotFoundException $error) {
+    include __DIR__ . '/templates/exceptions.php';
+}
+
