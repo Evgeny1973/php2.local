@@ -15,9 +15,10 @@ try {
     $ctrl->action($action);
 
 } catch (\App\DbException $error) {
-    include __DIR__ . '/templates/exceptions.php';
-
+    //include __DIR__ . '/templates/exceptions.php';
+    $ctrl->action('error');
 } catch (\App\NotFoundException $error) {
-    include __DIR__ . '/templates/exceptions.php';
+    //include __DIR__ . '/templates/exceptions.php';
+    $ctrl->action('error');
 }
 

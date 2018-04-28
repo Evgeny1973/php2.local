@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h4>Ошибка БД: <?php echo $error->getMessage(); ?> </h4>
+<h4>Ошибка БД: <?php var_dump($this->error); ?> </h4>
 
 </body>
 </html>
