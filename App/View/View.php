@@ -2,11 +2,13 @@
 
 namespace App\View;
 
+use App\Models\Author;
 use App\SetGet;
 
 /**
  * Class View
  * @property array $articles
+ * @property Author article
  */
 class View implements \Iterator, \Countable {
 

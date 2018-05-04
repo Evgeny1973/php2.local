@@ -20,7 +20,6 @@ class Admin extends Controller {
     }
 
     /**
-     * @throws \App\MultiException
      * @throws \App\DbException
      */
     public function newArticle() {
@@ -47,7 +46,6 @@ class Admin extends Controller {
     /**
      *Сохранение изменений в новости
      * @throws \App\DbException
-     * @throws \App\Error404
      */
     public function save() {
         if (isset($_POST['submit'])) {
