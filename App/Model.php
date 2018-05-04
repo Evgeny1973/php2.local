@@ -9,6 +9,7 @@ use App\MultiException;
 abstract class Model {
 
     public const TABLE = '';
+
     /**
      * @var int
      */
@@ -110,7 +111,14 @@ abstract class Model {
         return $result[0] ?? null;
     }
 
-    public function fill(array $data = []) {
+    /**
+     * @param array $data
+     * @return array
+     * @throws \App\MultiException
+     */
+    public function fill(array $data) {
+        var_dump($data);
+
         $errors = new MultiException;
         
         foreach ($data as $key => $value) {

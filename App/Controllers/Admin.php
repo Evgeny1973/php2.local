@@ -19,8 +19,20 @@ class Admin extends Controller {
         $this->view->display(__DIR__ . '/../../Admin/templates/index.php');
     }
 
-    public function newArticle(){
-
+    /**
+     * @throws \App\MultiException
+     * @throws \App\DbException
+     */
+    public function newArticle() {
+        if (isset($_POST['submit'])) {
+            $article = new Article;
+            $article->title = $_POST['title'];
+            $article->content = $_POST['content'];
+            $article->save();
+            header('Location: /Admin/');
+            exit;
+        }
+        $this->view->display(__DIR__ . '/../../Admin/templates/newarticle.php');
     }
 
     /**

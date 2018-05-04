@@ -13,6 +13,8 @@
 </head>
 <body>
 
+<h4><a href="/admin/newArticle">Добавить новость</a></h4>
+
 <?php
 
 foreach ($this->articles as $article) : ?>

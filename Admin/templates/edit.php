@@ -16,11 +16,13 @@
 <h3>Редактировать новость</h3>
 
 <form action="/admin/save" method="post"><br><br>
+
     Название:<br> <textarea cols="50" rows="4" name="title"><?php echo $this->article->title; ?></textarea> <br><br>
     Текст:<br> <textarea cols="50" rows="10" name="content"><?php echo $this->article->content; ?></textarea><br><br>
     <input type="hidden" name="id" value="<?php echo $this->article->id; ?>">
     <input type="hidden" name="author_id" value="<?php echo $this->article->author_id; ?>">
     <button type="submit" name="submit">Сохранить</button>
+
 </form>
 
 </body>
