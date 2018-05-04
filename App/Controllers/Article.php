@@ -3,24 +3,20 @@
 namespace App\Controllers;
 
 
-use App\NotFoundException;
+use App\Error404;
 
 class Article extends Controller {
 
-
     /**
-     * @throws NotFoundException
+     * @throws \App\Error404
      * @throws \App\DbException
      */
     public function oneArticle() {
-        $this->view->article = \App\Models\Article::findById($_GET['id']);
-        if (!null == $this->view->article) {
-            $this->view->display(__DIR__ . '/../../templates/article.php');
+        $article = \App\Models\Article::findById($_GET['id']);
+        if (null == $article) {
+            throw new Error404('Запрашиваемой записи в базе нет.');
         }
-    }
-
-    public function error() {
-        $this->view->error = new NotFoundException();
-        $this->view->display(__DIR__ . '/../../templates/exceptions.php');
+        $this->view->article = $article;
+        $this->view->display(__DIR__ . '/../../templates/article.php');
     }
 }

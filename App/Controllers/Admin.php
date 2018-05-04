@@ -12,14 +12,20 @@ class Admin extends Controller {
 
     /**
      * Отображает в админке все новости
+     * @throws \App\DbException
      */
     public function allNews() {
         $this->view->articles = Article::findAll();
         $this->view->display(__DIR__ . '/../../Admin/templates/index.php');
     }
 
+    public function newArticle(){
+
+    }
+
     /**
      * Редактирование новости
+     * @throws \App\DbException
      */
     public function edit() {
         $this->view->article = \App\Models\Article::findById($_GET['id']);
@@ -28,6 +34,8 @@ class Admin extends Controller {
 
     /**
      *Сохранение изменений в новости
+     * @throws \App\DbException
+     * @throws \App\Error404
      */
     public function save() {
         if (isset($_POST['submit'])) {

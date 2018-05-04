@@ -15,12 +15,13 @@ class Db {
      * @throws DbException
      */
     public function __construct() {
-        $config = Config::instance();
-        $this->dbh = new \PDO('mysql:host=' . $config->data['db']['host'] . ';dbname=' . $config->data['db']['dbname'],
-            $config->data['db']['dbuser'],
-            $config->data['db']['password']);
-        if (!$this->dbh) {
-            throw new DbException('Соединение с базой не удолось.');
+        try {
+            $config = Config::instance();
+            $this->dbh = new \PDO('mysql:host=' . $config->data['db']['host'] . ';dbname=' . $config->data['db']['dbname'],
+                $config->data['db']['dbuser'],
+                $config->data['db']['password']);
+        } catch (\PDOException $error) {
+            throw new  DbException ('Нет соединения с базой.');
         }
     }
 
@@ -31,9 +32,13 @@ class Db {
      * @return array
      * @throws DbException
      */
-    public function query(string $sql, array $data = [], string $class) {
+    public
+    function query(string $sql, array $data = [], string $class) {
         $sth = $this->dbh->prepare($sql);
-        $sth->execute($data);
+        $result = $sth->execute($data);
+        if (!$result) {
+            throw new DbException('Запрос query к базе не выполнен.');
+        }
         return $sth->fetchAll(\PDO::FETCH_CLASS, $class);
     }
 
@@ -43,11 +48,12 @@ class Db {
      * @return bool
      * @throws DbException
      */
-    public function execute(string $query, array $params = []) {
+    public
+    function execute(string $query, array $params = []) {
         $sth = $this->dbh->prepare($query);
         $result = $sth->execute($params);
         if (!$result) {
-            throw new DbException('Запрос execute к базе не удался.');
+            throw new DbException('Запрос execute к базе не выполнен.');
         }
         return $result;
     }

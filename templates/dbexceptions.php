@@ -1,3 +1,7 @@
+<?php
+/** @var App\View\View $this */
+?>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -9,7 +13,9 @@
 </head>
 <body>
 
-<h4>Ошибка БД: <?php var_dump($this->error); ?> </h4>
+<h4>Ошибка БД:
+    <?php echo $this->dberror->getMessage(); ?>
+</h4>
 
 </body>
 </html>

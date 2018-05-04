@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Article;
 use App\Models\Author;
+use App\MultiException;
 
 abstract class Model {
 
@@ -56,6 +57,7 @@ abstract class Model {
      */
     public function update() {
         $fields = get_object_vars($this);
+
         $values = [];
         $data = [];
 
@@ -79,7 +81,6 @@ abstract class Model {
      */
     public function delete() {
         $sql = 'DELETE FROM ' . static::TABLE . ' WHERE id=:id';
-
         $db = new Db;
         return $db->execute($sql, ['id' => $this->id]);
     }
@@ -101,15 +102,74 @@ abstract class Model {
      * @param $id
      * @return Article|Author
      * @throws DbException
-     * @throws NotFoundException
      */
     public static function findById($id) {
         $dbh = new Db;
         $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=:id';
         $result = $dbh->query($sql, [':id' => $id], static::class);
-        if (!$result) {
-            throw new NotFoundException('Запись в базе не найдена.');
-        }
         return $result[0] ?? null;
     }
+
+    public function fill(array $data = []) {
+        $errors = new MultiException;
+        
+        foreach ($data as $key => $value) {
+            try {
+                if ('author_id' != $key && 'id' != $key) {
+                    if (empty($value)) {
+                        throw new \Exception('Данные пустые.');
+                    }
+                }
+            } catch (\Exception $e) {
+                $errors->add($e);
+            }
+        }
+
+        if (!empty($errors->getAllErrors())) {
+            throw  $errors;
+        } else {
+            return $data;
+        }
+    }
 }
+
+
+/**
+ * @param iterable $data
+ * @throws Errors
+ */
+/*
+public function fill(iterable $data)
+{
+    $errors = new Errors();
+
+    foreach ($data as $name => $value) {
+
+        if (!$this->existsField($name)) {
+            $errors->addError(new \Exception('В моделе нет данного свойства.'));
+            continue;
+        }
+
+        $validator = 'validate' . $name . 'Field';
+        if (method_exists($this, $validator)) {
+            try {
+                $this->$validator($value);
+            } catch (\Exception $e) {
+                $errors->addError($e);
+                continue;
+            }
+        }
+
+        $this->$name = $value;
+    }
+
+    if (!$errors->isErrorsArrayEmpty()) {
+        throw $errors;
+    }
+}
+
+public function existsField($name) {
+    $fields = get_object_vars($this);
+    return array_key_exists($name, $fields);
+}
+*/
