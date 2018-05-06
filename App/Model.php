@@ -57,22 +57,29 @@ abstract class Model {
      * @throws DbException
      */
     public function update() {
-        $fields = get_object_vars($this);
+        $objectvars = get_object_vars($this);
 
         $values = [];
         $data = [];
 
-        foreach ($fields as $name => $value) {
-            $data[':' . $name] = $value;
-            if ('id' == $name) {
-                continue;
+        try {
+            $fields = $this->fill($objectvars);
+            foreach ($fields as $name => $value) {
+                $data[':' . $name] = $value;
+                if ('id' == $name) {
+                    continue;
+                }
+                $values[] = $name . '=:' . $name;
             }
-            $values[] = $name . '=:' . $name;
+            $sql = 'UPDATE ' . static::TABLE .
+                ' SET ' . implode(', ', $values) . ' WHERE id=:id';
+            $db = new Db;
+            return $db->execute($sql, $data);
+        } catch (MultiException $e) {
+            foreach ($e->getAllErrors() as $error) {
+                echo $error->getMessage();
+            }
         }
-        $sql = 'UPDATE ' . static::TABLE .
-            ' SET ' . implode(', ', $values) . ' WHERE id=:id';
-        $db = new Db;
-        return $db->execute($sql, $data);
     }
 
     /**
@@ -80,7 +87,8 @@ abstract class Model {
      * @return bool
      * @throws DbException
      */
-    public function delete() {
+    public
+    function delete() {
         $sql = 'DELETE FROM ' . static::TABLE . ' WHERE id=:id';
         $db = new Db;
         return $db->execute($sql, ['id' => $this->id]);
@@ -90,7 +98,8 @@ abstract class Model {
      * Метод выбора - обновить запись (если есть id) или внести новую
      * @throws DbException
      */
-    public function save() {
+    public
+    function save() {
         if (null !== $this->id) {
             $this->update();
         } else {
@@ -104,7 +113,8 @@ abstract class Model {
      * @return Article|Author
      * @throws DbException
      */
-    public static function findById($id) {
+    public
+    static function findById($id) {
         $dbh = new Db;
         $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=:id';
         $result = $dbh->query($sql, [':id' => $id], static::class);
@@ -117,12 +127,12 @@ abstract class Model {
      * @throws \App\MultiException
      */
     public function fill(array $data) {
-        var_dump($data);
-
         $errors = new MultiException;
-        
+
         foreach ($data as $key => $value) {
             try {
+                echo $key . ' => ' . $value . '<br>';
+
                 if ('author_id' != $key && 'id' != $key) {
                     if (empty($value)) {
                         throw new \Exception('Данные пустые.');
@@ -142,10 +152,6 @@ abstract class Model {
 }
 
 
-/**
- * @param iterable $data
- * @throws Errors
- */
 /*
 public function fill(iterable $data)
 {

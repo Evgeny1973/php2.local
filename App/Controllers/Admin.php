@@ -20,6 +20,7 @@ class Admin extends Controller {
     }
 
     /**
+     * Добавление новой новости в базу
      * @throws \App\DbException
      */
     public function newArticle() {
