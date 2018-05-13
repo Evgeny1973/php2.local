@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Error404;
 use App\Models\Article;
+use App\MultiException;
 
 /**
  * Class Admin
@@ -24,14 +26,6 @@ class Admin extends Controller {
      * @throws \App\DbException
      */
     public function newArticle() {
-        if (isset($_POST['submit'])) {
-            $article = new Article;
-            $article->title = $_POST['title'];
-            $article->content = $_POST['content'];
-            $article->save();
-            header('Location: /Admin/');
-            exit;
-        }
         $this->view->display(__DIR__ . '/../../Admin/templates/newarticle.php');
     }
 
@@ -44,20 +38,26 @@ class Admin extends Controller {
         $this->view->display(__DIR__ . '/../../Admin/templates/edit.php');
     }
 
+
     /**
-     *Сохранение изменений в новости
+     * Метод сохранения либо отредактированной (если не пустой $_POST['id']), либо новой новости
+     * @throws Error404
      * @throws \App\DbException
+     * @throws \App\MultiException
      */
     public function save() {
-        if (isset($_POST['submit'])) {
+        if (!empty($_POST['id'])) {
             $article = \App\Models\Article::findById($_POST['id']);
-            $article->title = ($_POST['title']);
-            $article->content = ($_POST['content']);
-            $article->id = ($_POST['id']);
-            $article->author_id = ($_POST['author_id']);
-            $article->save();
-            header('Location: /Admin/');
-            exit;
+            if (empty($article)) {
+                throw new Error404('Запись не найдена');
+            }
+        } else {
+            $article = new Article;
         }
+        unset ($_POST['submit']);
+        $article->fill($_POST);
+        $article->save();
+        header('Location: /Admin/');
+        exit;
     }
 }

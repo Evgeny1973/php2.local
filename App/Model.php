@@ -57,29 +57,23 @@ abstract class Model {
      * @throws DbException
      */
     public function update() {
-        $objectvars = get_object_vars($this);
+        $fields = get_object_vars($this);
 
         $values = [];
         $data = [];
 
-        try {
-            $fields = $this->fill($objectvars);
-            foreach ($fields as $name => $value) {
-                $data[':' . $name] = $value;
-                if ('id' == $name) {
-                    continue;
-                }
-                $values[] = $name . '=:' . $name;
+        foreach ($fields as $name => $value) {
+            $data[':' . $name] = $value;
+            if ('id' == $name) {
+                continue;
             }
-            $sql = 'UPDATE ' . static::TABLE .
-                ' SET ' . implode(', ', $values) . ' WHERE id=:id';
-            $db = new Db;
-            return $db->execute($sql, $data);
-        } catch (MultiException $e) {
-            foreach ($e->getAllErrors() as $error) {
-                echo $error->getMessage();
-            }
+            $values[] = $name . '=:' . $name;
         }
+        $sql = 'UPDATE ' . static::TABLE .
+            ' SET ' . implode(', ', $values) . ' WHERE id=:id';
+        $db = new Db;
+        return $db->execute($sql, $data);
+
     }
 
     /**
@@ -123,67 +117,29 @@ abstract class Model {
 
     /**
      * @param array $data
-     * @return array
+     * @return string
      * @throws \App\MultiException
      */
     public function fill(array $data) {
         $errors = new MultiException;
 
         foreach ($data as $key => $value) {
-            try {
-                echo $key . ' => ' . $value . '<br>';
 
-                if ('author_id' != $key && 'id' != $key) {
-                    if (empty($value)) {
-                        throw new \Exception('Данные пустые.');
-                    }
+            $method_name = 'validate' . ucfirst($key);
+            var_dump(method_exists($this, $method_name));
+            if (method_exists($this, $method_name)) {
+                try {
+                    $this->$method_name($value);
+                } catch (\Exception $e) {
+                    $errors->add(new \Exception('Некорректный ' . $key));
+                    continue;
                 }
-            } catch (\Exception $e) {
-                $errors->add($e);
+                $this->$key = $value;
             }
         }
-
-        if (!empty($errors->getAllErrors())) {
-            throw  $errors;
-        } else {
-            return $data;
-        }
-    }
-}
-
-
-/*
-public function fill(iterable $data)
-{
-    $errors = new Errors();
-
-    foreach ($data as $name => $value) {
-
-        if (!$this->existsField($name)) {
-            $errors->addError(new \Exception('В моделе нет данного свойства.'));
-            continue;
+        if (!$errors->isEmpty()) {
+            throw $errors;
         }
 
-        $validator = 'validate' . $name . 'Field';
-        if (method_exists($this, $validator)) {
-            try {
-                $this->$validator($value);
-            } catch (\Exception $e) {
-                $errors->addError($e);
-                continue;
-            }
-        }
-
-        $this->$name = $value;
-    }
-
-    if (!$errors->isErrorsArrayEmpty()) {
-        throw $errors;
     }
 }
-
-public function existsField($name) {
-    $fields = get_object_vars($this);
-    return array_key_exists($name, $fields);
-}
-*/

@@ -7,6 +7,10 @@ use App\Error404;
 
 class Article extends Controller {
 
+
+    public $title;
+    public $content;
+
     /**
      * @throws \App\Error404
      * @throws \App\DbException
@@ -19,4 +23,20 @@ class Article extends Controller {
         $this->view->article = $article;
         $this->view->display(__DIR__ . '/../../templates/article.php');
     }
+
+    public function validateTitle($value) {
+        echo 123;
+        if (mb_strlen($value) > 50) {
+            return false;
+        }
+        return true;
+    }
+
+    protected function validateContent($value) {
+        if (mb_strlen($value) > 2000) {
+            return false;
+        }
+        return true;
+    }
+
 }

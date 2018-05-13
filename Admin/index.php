@@ -8,4 +8,11 @@ $parts = explode('/', trim($uri, '/'));
 $action = $parts[1] ?? 'allNews';
 
 $ctrl = new \App\Controllers\Admin;
-$ctrl->action($action);
+
+try {
+    $ctrl->action($action);
+} catch (\App\MultiException $errors) {
+    foreach ($errors->getAllErrors() as $error) {
+        echo $error->getMessage();
+    }
+}

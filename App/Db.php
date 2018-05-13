@@ -32,8 +32,7 @@ class Db {
      * @return array
      * @throws DbException
      */
-    public
-    function query(string $sql, array $data = [], string $class) {
+    public function query(string $sql, array $data = [], string $class) {
         $sth = $this->dbh->prepare($sql);
         $result = $sth->execute($data);
         if (!$result) {
@@ -48,13 +47,12 @@ class Db {
      * @return bool
      * @throws DbException
      */
-    public
-    function execute(string $query, array $params = []) {
+    public function execute(string $query, array $params = []) {
         $sth = $this->dbh->prepare($query);
         $result = $sth->execute($params);
-        if (!$result) {
-            throw new DbException('Запрос execute к базе не выполнен.');
-        }
+        //if (!$result) {
+         //   throw new DbException('Запрос execute к базе не выполнен.');
+        //}
         return $result;
     }
 }
