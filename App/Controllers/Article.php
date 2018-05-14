@@ -24,19 +24,18 @@ class Article extends Controller {
         $this->view->display(__DIR__ . '/../../templates/article.php');
     }
 
-    public function validateTitle($value) {
-        echo 123;
+/*    public function validateTitle($value) {
         if (mb_strlen($value) > 50) {
             return false;
         }
         return true;
     }
 
-    protected function validateContent($value) {
+    public function validateContent($value) {
         if (mb_strlen($value) > 2000) {
             return false;
         }
         return true;
-    }
+    }*/
 
 }

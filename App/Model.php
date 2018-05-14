@@ -115,6 +115,21 @@ abstract class Model {
         return $result[0] ?? null;
     }
 
+
+    public function validateTitle($value) {
+        if (mb_strlen($value) > 50) {
+            return false;
+        }
+        return true;
+    }
+
+    public function validateContent($value) {
+        if (mb_strlen($value) > 2000) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * @param array $data
      * @return string
@@ -126,7 +141,6 @@ abstract class Model {
         foreach ($data as $key => $value) {
 
             $method_name = 'validate' . ucfirst($key);
-            var_dump(method_exists($this, $method_name));
             if (method_exists($this, $method_name)) {
                 try {
                     $this->$method_name($value);
@@ -140,6 +154,5 @@ abstract class Model {
         if (!$errors->isEmpty()) {
             throw $errors;
         }
-
     }
 }
