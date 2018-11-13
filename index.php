@@ -13,12 +13,9 @@ $ctrl = $parts[0] ? ucfirst($parts[0]) : 'Index';
 $action = $parts[1] ?? 'allNews';
 
 try {
-    $class = '\App\Controllers\\' . $ctrl;
-    if (!class_exists($class)) {
-        exit('Класс не найден.');
-    }
-    $ctrl = new $class;
-    $ctrl->action($action);
+    $class = 'App\Controllers\\' . $ctrl;
+    $controller = new $class;
+    $controller->action($action);
 
 } catch (DbException $e) {
     Logger::dbExceptionLog($e);

@@ -34,7 +34,9 @@ class Admin extends Controller {
      * @throws \App\DbException
      */
     public function edit() {
-        $this->view->article = \App\Models\Article::findById($_GET['id']);
+        if (!$this->view->article = \App\Models\Article::findById($_GET['id'])) {
+            throw new Error404('Запись в БД не найдена.');
+        }
         $this->view->display(__DIR__ . '/../../templates/admin/edit.php');
     }
 
@@ -47,7 +49,7 @@ class Admin extends Controller {
         if (!empty($_POST['id'])) {
             $article = \App\Models\Article::findById($_POST['id']);
             if (empty($article)) {
-                throw new Error404('Запись не найдена');
+                throw new Error404('Запись в БД не найдена.');
             }
         } else {
             $article = new Article;
@@ -62,5 +64,6 @@ class Admin extends Controller {
         }
         $article->save();
         header('Location: /Admin/');
+        exit;
     }
 }
