@@ -55,7 +55,6 @@ class View implements \Iterator, \Countable {
         return (false !== $this->current()) ?? false;
     }
 
-    //Count
     /**
      * Возвращает количество элементов в массиве
      * @return int
