@@ -1,23 +1,32 @@
 <?php
+
+use App\Controllers\Errors;
+use App\Controllers\Logger;
+use App\DbException;
+use App\Error404;
+
 include __DIR__ . '/App/autoload.php';
 
 $uri = $_SERVER['REQUEST_URI'];
-
-$parts = explode('/', $uri);
+$parts = explode('/', trim($uri, '/'));
+$ctrl = $parts[0] ? ucfirst($parts[0]) : 'Index';
+$action = $parts[1] ?? 'allNews';
 
 try {
-    $ctrl = $parts[1] ? ucfirst($parts[1]) : 'Index';
-    $action = $parts[2] ?? 'allNews';
-
     $class = '\App\Controllers\\' . $ctrl;
+    if (!class_exists($class)) {
+        exit('Класс не найден.');
+    }
     $ctrl = new $class;
     $ctrl->action($action);
 
-} catch (\App\DbException $e) {
-    $error = new \App\Controllers\Errors;
+} catch (DbException $e) {
+    Logger::dbExceptionLog($e);
+    $error = new Errors;
     $error->dbError($e->getMessage());
 
-} catch (\App\Error404 $e) {
-    $error = new \App\Controllers\Errors;
+} catch (Error404 $e) {
+    Logger::notfoundExceptionLog($e);
+    $error = new Errors;
     $error->error404($e->getMessage());
 }

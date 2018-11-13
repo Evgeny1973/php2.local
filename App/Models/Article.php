@@ -47,4 +47,28 @@ class Article extends Model {
         }
         return false;
     }
+
+    /**
+     * Валидация заголовка новости
+     * @param $value
+     * @throws \Exception
+     */
+    public function validateTitle($value) {
+        if (mb_strlen($value) > 50) {
+            throw new \Exception('Заголовок новости не должен ревышать 50 знаков');
+        }
+        $this->title = $value;
+    }
+
+    /**
+     * Валидация текста новости
+     * @param $value
+     * @throws \Exception
+     */
+    public function validateContent($value) {
+        if (mb_strlen($value) > 2000) {
+            throw new \Exception('Текст новости не должен превышать 2000 знаков');
+        }
+        $this->content = $value;
+    }
 }

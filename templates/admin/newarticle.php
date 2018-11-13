@@ -14,7 +14,7 @@
 
     <p>Заголовок (не больше 50 знаков): </p> <textarea cols="50" rows="4" name="title"></textarea> <br><br>
     <p>Текст новости (не больше 2000 знаков): </p> <textarea cols="50" rows="20" name="content"></textarea> <br><br>
-    <button type="submit" name="submit">Сохранить</button>
+    <button type="submit">Сохранить</button>
 
 </form>
 

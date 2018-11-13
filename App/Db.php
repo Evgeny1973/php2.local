@@ -50,9 +50,9 @@ class Db {
     public function execute(string $query, array $params = []) {
         $sth = $this->dbh->prepare($query);
         $result = $sth->execute($params);
-        //if (!$result) {
-         //   throw new DbException('Запрос execute к базе не выполнен.');
-        //}
+        if (!$result) {
+            throw new DbException('Запрос execute к базе не выполнен.');
+        }
         return $result;
     }
 }

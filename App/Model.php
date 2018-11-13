@@ -4,7 +4,6 @@ namespace App;
 
 use App\Models\Article;
 use App\Models\Author;
-use App\MultiException;
 
 abstract class Model {
 
@@ -92,8 +91,7 @@ abstract class Model {
      * Метод выбора - обновить запись (если есть id) или внести новую
      * @throws DbException
      */
-    public
-    function save() {
+    public function save() {
         if (null !== $this->id) {
             $this->update();
         } else {
@@ -116,39 +114,23 @@ abstract class Model {
     }
 
 
-    public function validateTitle($value) {
-        if (mb_strlen($value) > 50) {
-            return false;
-        }
-        return true;
-    }
-
-    public function validateContent($value) {
-        if (mb_strlen($value) > 2000) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      * @param array $data
      * @return string
-     * @throws \App\MultiException
+     * @throws MultiException
      */
     public function fill(array $data) {
         $errors = new MultiException;
 
-        foreach ($data as $key => $value) {
-
-            $method_name = 'validate' . ucfirst($key);
-            if (method_exists($this, $method_name)) {
-                try {
-                    $this->$method_name($value);
-                } catch (\Exception $e) {
-                    $errors->add(new \Exception('Некорректный ' . $key));
+        foreach ($data as $key => $val) {
+            try {
+                if ('author_id' === $key || 'id' === $key){
                     continue;
                 }
-                $this->$key = $value;
+               $method = 'validate' . ucfirst($key);
+               $this->$method($val);
+            } catch (\Exception $error) {
+                $errors->add($error);
             }
         }
         if (!$errors->isEmpty()) {

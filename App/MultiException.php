@@ -7,16 +7,24 @@ class MultiException extends \Exception {
 
     protected $errors = [];
 
-    public function add(\Exception $e) {
+    /**
+     * @param \Exception $e
+     */
+    public function add(\Exception $e): void {
         $this->errors[] = $e;
     }
 
-    public function getAllErrors() {
+    /**
+     * @return array
+     */
+    public function getAllErrors(): array {
         return $this->errors;
     }
 
-    public function isEmpty(){
-
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool {
         return empty($this->errors);
     }
 }

@@ -21,7 +21,7 @@
     Текст:<br> <textarea cols="50" rows="10" name="content"><?php echo $this->article->content; ?></textarea><br><br>
     <input type="hidden" name="id" value="<?php echo $this->article->id; ?>">
     <input type="hidden" name="author_id" value="<?php echo $this->article->author_id; ?>">
-    <button type="submit" name="submit">Сохранить</button>
+    <button type="submit">Сохранить</button>
 
 </form>
 

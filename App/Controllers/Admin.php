@@ -18,7 +18,7 @@ class Admin extends Controller {
      */
     public function allNews() {
         $this->view->articles = Article::findAll();
-        $this->view->display(__DIR__ . '/../../Admin/templates/index.php');
+        $this->view->display(__DIR__ . '/../../templates/admin/index.php');
     }
 
     /**
@@ -26,7 +26,7 @@ class Admin extends Controller {
      * @throws \App\DbException
      */
     public function newArticle() {
-        $this->view->display(__DIR__ . '/../../Admin/templates/newarticle.php');
+        $this->view->display(__DIR__ . '/../../templates/admin/newarticle.php');
     }
 
     /**
@@ -35,15 +35,13 @@ class Admin extends Controller {
      */
     public function edit() {
         $this->view->article = \App\Models\Article::findById($_GET['id']);
-        $this->view->display(__DIR__ . '/../../Admin/templates/edit.php');
+        $this->view->display(__DIR__ . '/../../templates/admin/edit.php');
     }
-
 
     /**
      * Метод сохранения либо отредактированной (если не пустой $_POST['id']), либо новой новости
      * @throws Error404
      * @throws \App\DbException
-     * @throws \App\MultiException
      */
     public function save() {
         if (!empty($_POST['id'])) {
@@ -54,10 +52,15 @@ class Admin extends Controller {
         } else {
             $article = new Article;
         }
-        unset ($_POST['submit']);
-        $article->fill($_POST);
+        try {
+
+            $article->fill($_POST);
+        } catch (MultiException $e) {
+            foreach ($e->getAllErrors() as $error) {
+                echo $error->getMessage() . '<br>';
+            }
+        }
         $article->save();
         header('Location: /Admin/');
-        exit;
     }
 }
