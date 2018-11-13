@@ -8,7 +8,7 @@ use App\Error404;
 class Logger {
 
     /**
-     * @param \Throwable $e
+     * @param DbException $e
      */
     public static function dbExceptionLog(DbException $e) {
         $error = date('d-m-Y H:i:s') .
@@ -20,7 +20,7 @@ class Logger {
     }
 
     /**
-     * @param \Throwable $e
+     * @param Error404 $e
      */
     public static function notfoundExceptionLog(Error404 $e) {
         $error = date('d-m-Y H:i:s') .
