@@ -14,6 +14,10 @@ $action = $parts[1] ?? 'allNews';
 
 try {
     $class = 'App\Controllers\\' . $ctrl;
+    if (!class_exists($class)) {
+        exit('Неправильный URL.');
+    }
+
     $controller = new $class;
     $controller->action($action);
 
