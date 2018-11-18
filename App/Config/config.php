@@ -2,9 +2,14 @@
 
 return [
     'db' => [
-        'host' => 'localhost',
-        'dbname' => 'php2',
-        'dbuser' => 'root',
-        'password' => '1'
-    ]
+        'host' => 'host',
+        'dbname' => 'dbname',
+        'dbuser' => 'dbuser',
+        'password' => 'password'
+    ],
+    'swiftmailer' => [
+        'host' => 'smtp.host',
+        'username' => 'username',
+        'password' => 'password',
+    ],
 ];
