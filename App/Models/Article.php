@@ -54,10 +54,9 @@ class Article extends Model {
      * @throws \Exception
      */
     public function validateTitle($value) {
-        if (mb_strlen($value) > 50) {
-            throw new \Exception('Заголовок новости не должен ревышать 50 знаков');
+        if (mb_strlen($value) > 100) {
+            throw new \Exception('Заголовок новости не должен ревышать 100 знаков');
         }
-        $this->title = $value;
     }
 
     /**
@@ -69,6 +68,16 @@ class Article extends Model {
         if (mb_strlen($value) > 2000) {
             throw new \Exception('Текст новости не должен превышать 2000 знаков');
         }
-        $this->content = $value;
+    }
+
+    /**
+     * Валидация id автора новости
+     * @param $value
+     * @throws \Exception
+     */
+    public function validateAuthor_id($value) {
+        if (intval($value) < 0) {
+            throw new \Exception('Некорректный id автора.');
+        }
     }
 }

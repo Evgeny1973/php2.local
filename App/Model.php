@@ -113,7 +113,6 @@ abstract class Model {
         return $result[0] ?? null;
     }
 
-
     /**
      * @param array $data
      * @return string
@@ -124,14 +123,15 @@ abstract class Model {
 
         foreach ($data as $key => $val) {
             try {
-                if ('author_id' === $key || 'id' === $key){
+                if ('id' === $key) {
                     continue;
                 }
-               $method = 'validate' . ucfirst($key);
-               $this->$method($val);
+                $method = 'validate' . ucfirst($key);
+                $this->$method($val);
             } catch (\Exception $error) {
                 $errors->add($error);
             }
+            $this->$key = $val;
         }
         if (!$errors->isEmpty()) {
             throw $errors;
