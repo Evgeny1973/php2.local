@@ -3,14 +3,17 @@
 namespace App;
 
 
-trait Singleton {
+trait Singleton
+{
 
     protected static $instance;
 
-    protected function __construct() {
+    protected function __construct()
+    {
     }
 
-    public static function instance() {
+    public static function instance()
+    {
         if (null === static::$instance) {
             static::$instance = new static;
         }

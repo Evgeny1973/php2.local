@@ -5,7 +5,8 @@ namespace App\Controllers;
 
 use App\Error404;
 
-class Article extends Controller {
+class Article extends Controller
+{
 
     public $title;
     public $content;
@@ -14,7 +15,8 @@ class Article extends Controller {
      * @throws \App\Error404
      * @throws \App\DbException
      */
-    public function oneArticle() {
+    public function oneArticle()
+    {
         $article = \App\Models\Article::findById($_GET['id']);
         if (null == $article) {
             throw new Error404('Запрашиваемой записи в базе нет.');

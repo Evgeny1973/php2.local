@@ -5,12 +5,14 @@ namespace App\Controllers;
 use App\DbException;
 use App\Error404;
 
-class Logger {
+class Logger
+{
 
     /**
      * @param DbException $e
      */
-    public static function dbExceptionLog(DbException $e) {
+    public static function dbExceptionLog(DbException $e)
+    {
         $error = date('d-m-Y H:i:s') .
             ' Ошибка БД: ' . $e->getMessage() .
             '. В файле: ' . $e->getFile() .
@@ -22,7 +24,8 @@ class Logger {
     /**
      * @param Error404 $e
      */
-    public static function notfoundExceptionLog(Error404 $e) {
+    public static function notfoundExceptionLog(Error404 $e)
+    {
         $error = date('d-m-Y H:i:s') .
             ' Не найдено: ' . $e->getMessage() .
             '. В файле: ' . $e->getFile() .

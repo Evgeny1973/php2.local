@@ -5,7 +5,8 @@ namespace App\Models;
 
 use App\Model;
 
-class Author extends Model {
+class Author extends Model
+{
 
     /**
      * Таблица с авторами

@@ -3,7 +3,8 @@
 namespace App;
 
 
-class Db {
+class Db
+{
 
     /**
      * @var \PDO
@@ -14,7 +15,8 @@ class Db {
      * Db constructor.
      * @throws DbException
      */
-    public function __construct() {
+    public function __construct()
+    {
         try {
             $config = Config::instance();
             $this->dbh = new \PDO('mysql:host=' . $config->data['db']['host'] . ';dbname=' . $config->data['db']['dbname'],
@@ -32,11 +34,12 @@ class Db {
      * @return array
      * @throws DbException
      */
-    public function query(string $sql, array $data = [], string $class) {
+    public function query(string $sql, array $data = [], string $class)
+    {
         $sth = $this->dbh->prepare($sql);
         $result = $sth->execute($data);
         if (!$result) {
-            throw new DbException('Запрос query к базе не выполнен.');
+            throw new DbException('Запрос query ' . $sql . ' не выполнен.');
         }
         return $sth->fetchAll(\PDO::FETCH_CLASS, $class);
     }
@@ -47,11 +50,12 @@ class Db {
      * @return bool
      * @throws DbException
      */
-    public function execute(string $query, array $params = []) {
+    public function execute(string $query, array $params = [])
+    {
         $sth = $this->dbh->prepare($query);
         $result = $sth->execute($params);
         if (!$result) {
-            throw new DbException('Запрос execute к базе не выполнен.');
+            throw new DbException('Запрос execute ' . $query . ' не выполнен.');
         }
         return $result;
     }

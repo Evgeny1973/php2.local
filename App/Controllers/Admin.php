@@ -10,13 +10,15 @@ use App\MultiException;
  * Class Admin
  * @package App\Controllers
  */
-class Admin extends Controller {
+class Admin extends Controller
+{
 
     /**
      * Отображает в админке все новости
      * @throws \App\DbException
      */
-    public function allNews() {
+    public function allNews()
+    {
         $this->view->articles = Article::findAll();
         $this->view->display(__DIR__ . '/../../templates/admin/index.php');
     }
@@ -25,7 +27,8 @@ class Admin extends Controller {
      * Добавление новой новости в базу
      * @throws \App\DbException
      */
-    public function newArticle() {
+    public function newArticle()
+    {
         $this->view->display(__DIR__ . '/../../templates/admin/newarticle.php');
     }
 
@@ -33,7 +36,8 @@ class Admin extends Controller {
      * Редактирование новости
      * @throws \App\DbException
      */
-    public function edit() {
+    public function edit()
+    {
         if (!$this->view->article = \App\Models\Article::findById($_GET['id'])) {
             throw new Error404('Запись в БД не найдена.');
         }
@@ -45,7 +49,8 @@ class Admin extends Controller {
      * @throws Error404
      * @throws \App\DbException
      */
-    public function save() {
+    public function save()
+    {
         if (!empty($_POST['id'])) {
             $article = \App\Models\Article::findById($_POST['id']);
             if (empty($article)) {

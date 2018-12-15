@@ -4,14 +4,16 @@ namespace App\Controllers;
 
 use App\Config;
 
-class EmailSender {
+class EmailSender
+{
 
     protected $mailer;
 
     /**
      * SwiftMail constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $config = Config::instance();
         $transport = (new \Swift_SmtpTransport($config->data['swiftmailer']['host'],
             $config->data['swiftmailer']['port']))
@@ -25,7 +27,8 @@ class EmailSender {
      * Рендер письма с ошибкой и отправка админу
      * @param $e
      */
-    public function sendEmail($e): void {
+    public function sendEmail($e): void
+    {
 
         $message = (new \Swift_Message)
             ->setFrom('admin@php2.local')

@@ -3,6 +3,7 @@
 namespace App;
 
 
-class Error404 extends \Exception {
+class Error404 extends \Exception
+{
 
 }

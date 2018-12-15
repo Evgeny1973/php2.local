@@ -5,7 +5,8 @@ namespace App;
 use App\Models\Article;
 use App\Models\Author;
 
-abstract class Model {
+abstract class Model
+{
 
     public const TABLE = '';
 
@@ -18,7 +19,8 @@ abstract class Model {
      * @return array
      * @throws DbException
      */
-    public static function findAll() {
+    public static function findAll()
+    {
         $db = new Db;
         $sql = 'SELECT * FROM ' . static::TABLE;
         return $db->query($sql, [], static::class);
@@ -29,7 +31,8 @@ abstract class Model {
      * @return bool
      * @throws DbException
      */
-    public function insert() {
+    public function insert()
+    {
         $fields = get_object_vars($this);
         $cols = [];
         $values = [];
@@ -55,7 +58,8 @@ abstract class Model {
      * @return bool
      * @throws DbException
      */
-    public function update() {
+    public function update()
+    {
         $fields = get_object_vars($this);
 
         $values = [];
@@ -81,7 +85,8 @@ abstract class Model {
      * @throws DbException
      */
     public
-    function delete() {
+    function delete()
+    {
         $sql = 'DELETE FROM ' . static::TABLE . ' WHERE id=:id';
         $db = new Db;
         return $db->execute($sql, ['id' => $this->id]);
@@ -91,7 +96,8 @@ abstract class Model {
      * Метод выбора - обновить запись (если есть id) или внести новую
      * @throws DbException
      */
-    public function save() {
+    public function save()
+    {
         if (null !== $this->id) {
             $this->update();
         } else {
@@ -106,7 +112,9 @@ abstract class Model {
      * @throws DbException
      */
     public
-    static function findById($id) {
+    static function findById(
+        $id
+    ) {
         $dbh = new Db;
         $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=:id';
         $result = $dbh->query($sql, [':id' => $id], static::class);
@@ -118,7 +126,8 @@ abstract class Model {
      * @return string
      * @throws MultiException
      */
-    public function fill(array $data) {
+    public function fill(array $data)
+    {
         $errors = new MultiException;
 
         foreach ($data as $key => $val) {
