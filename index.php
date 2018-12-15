@@ -2,6 +2,7 @@
 
 use App\Controllers\Errors;
 use App\Controllers\Logger;
+use App\Controllers\EmailSender;
 use App\DbException;
 use App\Error404;
 
@@ -23,6 +24,8 @@ try {
 
 } catch (DbException $e) {
     Logger::dbExceptionLog($e);
+    $mailer = new EmailSender;
+    $mailer->sendEmail($e->getMessage());
     $error = new Errors;
     $error->dbError($e->getMessage());
 
@@ -30,4 +33,10 @@ try {
     Logger::notfoundExceptionLog($e);
     $error = new Errors;
     $error->error404($e->getMessage());
+
+} catch (\Swift_TransportException $e) {
+    echo $e->getMessage();
+
+} catch (\Exception $e) {
+    echo $e->getMessage();
 }
