@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Service;
 
 use App\Config;
 
@@ -29,7 +29,6 @@ class EmailSender
      */
     public function sendEmail($e): void
     {
-
         $message = (new \Swift_Message)
             ->setFrom('admin@php2.local')
             ->setTo('gren33@mail.ru')

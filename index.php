@@ -2,9 +2,9 @@
 
 use App\Controllers\Errors;
 use App\Controllers\Logger;
-use App\Controllers\EmailSender;
 use App\DbException;
 use App\Error404;
+use App\Service\EmailSender;
 
 include __DIR__ . '/App/autoload.php';
 
