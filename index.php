@@ -1,10 +1,10 @@
 <?php
 
 use App\Controllers\Errors;
-use App\Controllers\Logger;
+use App\Service\Logger;
 use App\DbException;
 use App\Error404;
-use App\Service\EmailSender;
+use App\Service\Mailer;
 
 include __DIR__ . '/App/autoload.php';
 
@@ -24,8 +24,8 @@ try {
 
 } catch (DbException $e) {
     Logger::dbExceptionLog($e);
-    $mailer = new EmailSender;
-    $mailer->sendEmail($e->getMessage());
+    $mailer = new Mailer;
+    $mailer->sendEmail($e);
     $error = new Errors;
     $error->dbError($e->getMessage());
 

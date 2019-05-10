@@ -3,8 +3,11 @@
 namespace App\Service;
 
 use App\Config;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 
-class EmailSender
+class Mailer
 {
 
     protected $mailer;
@@ -15,12 +18,12 @@ class EmailSender
     public function __construct()
     {
         $config = Config::instance();
-        $transport = (new \Swift_SmtpTransport($config->data['swiftmailer']['host'],
+        $transport = (new Swift_SmtpTransport($config->data['swiftmailer']['host'],
             $config->data['swiftmailer']['port']))
             ->setUsername($config->data['swiftmailer']['username'])
             ->setPassword($config->data['swiftmailer']['password']);
 
-        $this->mailer = new \Swift_Mailer($transport);
+       $this->mailer = new Swift_Mailer($transport);
     }
 
     /**
@@ -29,10 +32,11 @@ class EmailSender
      */
     public function sendEmail($e): void
     {
-        $message = (new \Swift_Message)
-            ->setFrom('admin@php2.local')
-            ->setTo('gren33@mail.ru')
-            ->setSubject('Attension! Ошибка соединения с БД')
+        $config = Config::instance();
+        $message = (new Swift_Message)
+            ->setFrom($config->data['emails']['from'])
+            ->setTo($config->data['emails']['admin'])
+            ->setSubject('Attention! Ошибка соединения с БД')
             ->setBody($e);
 
         $this->mailer->send($message);

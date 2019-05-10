@@ -13,4 +13,8 @@ return [
         'username' => 'username',
         'password' => 'password',
     ],
+    'emails' => [
+        'from' => 'set@fromemail.ru',
+        'admin' => 'set@adminemail.ru',
+    ],
 ];
