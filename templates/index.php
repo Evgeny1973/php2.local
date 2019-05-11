@@ -13,16 +13,13 @@
 </head>
 <body>
 
-<?php
-foreach ($this->articles as $article) : ?>
+<?php foreach ($this->articles as $article) : ?>
     <h2><a href="/article/oneArticle/?id=<?php echo $article->id; ?>"><?php echo $article->title; ?></a></h2>
     <p><?php echo $article->content; ?></p>
-
     <?php if (!empty($article->author_id)) : ?>
         <strong><?php echo $article->author->name; ?> </strong>
     <?php endif; ?>
     <hr>
-
 <?php endforeach; ?>
 
 </body>

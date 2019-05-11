@@ -27,17 +27,17 @@ class Admin extends Controller
 
         $adminTable = new AdminDataTable($articles,
             [
-                'id'      => function ($model) {
+                'id'      => function (Article $model): int {
                     return $model->id;
                 },
-                'title'   => function ($model) {
+                'title'   => function (Article $model): string {
                     return $model->title;
                 },
-                'content' => function ($model) {
-                    return $model->content;
+                'content' => function (Article $model): string {
+                    return mb_substr($model->content, 0, 150);
                 },
-                'author_id' => function ($model) {
-                    return $model->author;
+                'author'  => function (Article $model): ?string {
+                    return $model->author->name ?? null;
                 },
             ]);
         {
@@ -80,7 +80,6 @@ class Admin extends Controller
         header('Location: /Admin/');
         exit;
     }
-
 
     /**
      * Метод сохранения либо отредактированной (если не пустой $_POST['id']), либо новой новости

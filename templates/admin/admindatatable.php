@@ -13,10 +13,9 @@
     <a href="/Admin/newArticle">Создать новость</a>
 </h3>
 <hr>
-
 <h1>Список новостей</h1>
 
-<table border="1">
+<table border="1" style="border-collapse: collapse">
     <tr style="background-color: azure">
         <th>№</th>
         <th>Заголовок</th>
@@ -24,15 +23,16 @@
         <th>Автор</th>
         <th>Action</th>
     </tr>
-    <?php foreach ($this->articles as $article): ; ?>
+    <?php foreach ($this->articles as $article): ?>
         <tr>
             <td><?php echo $article['id']; ?></td>
             <td><?php echo $article['title']; ?></td>
-            <td><?php echo $article['content']; ?></td>
-            <td><?php echo $article['author_id']->name ?? null; ?></td>
+            <td><?php echo $article['content']; ?>...</td>
+            <td><?php echo $article['author']; ?></td>
             <td>
                 <a href="/Admin/edit/?id=<?php echo $article['id']; ?>">Редактировать</a>
                 <a href="/Admin/delete/?id=<?php echo $article['id']; ?>">Удалить</a>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>

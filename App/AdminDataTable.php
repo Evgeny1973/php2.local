@@ -6,11 +6,11 @@ use App\View\View;
 
 class AdminDataTable
 {
-
     /**
      * @var array
      */
     protected $models;
+
     /**
      * @var array
      */
