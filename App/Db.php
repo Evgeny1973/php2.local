@@ -44,6 +44,19 @@ class Db
         return $sth->fetchAll(\PDO::FETCH_CLASS, $class);
     }
 
+    public function queryEach(string $sql, array $data = [], string $class)
+    {
+        $sth = $this->dbh->prepare($sql);
+        $result = $sth->execute($data);
+        if (!$result) {
+            throw new DbException('Запрос query ' . $sql . ' не выполнен.');
+        }
+        $sth->setFetchMode(\PDO::FETCH_CLASS, $class);
+        while ($row = $sth->fetch()){
+            yield $row;
+        }
+    }
+
     /**
      * @param string $query
      * @param array $params

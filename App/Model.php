@@ -23,7 +23,7 @@ abstract class Model
     {
         $db = new Db;
         $sql = 'SELECT * FROM ' . static::TABLE;
-        return $db->query($sql, [], static::class);
+        return $db->queryEach($sql, [], static::class);
     }
 
     /**
@@ -111,14 +111,12 @@ abstract class Model
      * @return Article|Author
      * @throws DbException
      */
-    public
-    static function findById(
-        $id
-    ) {
+    public static function findById($id)
+    {
         $dbh = new Db;
         $sql = 'SELECT * FROM ' . static::TABLE . ' WHERE id=:id';
-        $result = $dbh->query($sql, [':id' => $id], static::class);
-        return $result[0] ?? null;
+        $result = $dbh->queryEach($sql, [':id' => $id], static::class);
+        return $result->current() ?? null;
     }
 
     /**

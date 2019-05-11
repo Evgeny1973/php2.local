@@ -12,13 +12,13 @@
     <title>Одна новость</title>
 </head>
 <body>
-
 <h2><?php echo $this->article->title; ?></h2>
 <p><?php echo $this->article->content; ?></p>
 
 <?php if (!empty($this->article->author)) : ?>
     <strong><?php echo $this->article->author->name; ?></strong>
 <?php endif; ?>
-
+<hr>
+<a href="/index/allNews">На главную</a>
 </body>
 </html>

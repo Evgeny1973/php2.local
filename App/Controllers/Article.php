@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-
+use App\DbException;
 use App\Error404;
 
 class Article extends Controller
@@ -12,10 +12,10 @@ class Article extends Controller
     public $content;
 
     /**
-     * @throws \App\Error404
-     * @throws \App\DbException
+     * @throws Error404
+     * @throws DbException
      */
-    public function oneArticle()
+    public function oneArticle(): void
     {
         $article = \App\Models\Article::findById($_GET['id']);
         if (null == $article) {

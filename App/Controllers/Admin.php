@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\AdminDataTable;
 use App\Error404;
 use App\Models\Article;
 use App\MultiException;
@@ -12,15 +13,36 @@ use App\MultiException;
  */
 class Admin extends Controller
 {
-
     /**
      * Отображает в админке все новости
      * @throws \App\DbException
      */
     public function allNews()
     {
-        $this->view->articles = Article::findAll();
-        $this->view->display(__DIR__ . '/../../templates/admin/index.php');
+        $news = Article::findAll();
+        $articles = [];
+        foreach ($news as $article) {
+            $articles[] = $article;
+        }
+
+        $adminTable = new AdminDataTable($articles,
+            [
+                'id'      => function ($model) {
+                    return $model->id;
+                },
+                'title'   => function ($model) {
+                    return $model->title;
+                },
+                'content' => function ($model) {
+                    return $model->content;
+                },
+                'author_id' => function ($model) {
+                    return $model->author;
+                },
+            ]);
+        {
+            $adminTable->render();
+        }
     }
 
     /**
@@ -43,6 +65,22 @@ class Admin extends Controller
         }
         $this->view->display(__DIR__ . '/../../templates/admin/edit.php');
     }
+
+    /**
+     * Метод удаления записи
+     * @throws Error404
+     * @throws \App\DbException
+     */
+    public function delete()
+    {
+        if (!$article = \App\Models\Article::findById($_GET['id'])) {
+            throw new Error404('Запись в БД не найдена.');
+        }
+        $article->delete();
+        header('Location: /Admin/');
+        exit;
+    }
+
 
     /**
      * Метод сохранения либо отредактированной (если не пустой $_POST['id']), либо новой новости
